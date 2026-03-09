@@ -10,6 +10,7 @@ public class collins {
     private int speed; 
     private double attack;
     private double defense;
+    private double magic;
 
     public collins(){
         weapon = "Wooden Drumsticks";
@@ -21,6 +22,7 @@ public class collins {
         speed = 46;
         attack = 5.36;
         defense = 5.54;
+        magic = 4.23;
 
     }
 
@@ -61,8 +63,16 @@ public class collins {
         defense += 0.1;
     }
 
-    public void gainDefrense(double defense){
+    public void gainDefense(double defense){
         this.defense += defense;
+    }
+
+    public void gainMagic(){
+        magic += 0.1;
+    }
+
+    public void gainMagic(double magic){
+        this.magic += magic;
     }
 
     public void gainSpeed(){
@@ -72,6 +82,7 @@ public class collins {
     public void gainSpeed(int speed){
         this.speed += speed;
     }
+
     public void gainSpell(){
         boolean continue = true;
         boolean ableToContinue = true;
@@ -96,11 +107,29 @@ public class collins {
         }
     }
 
+    public void takeDamage(int damage){
+        curHealth -= damage;
+        if (curHealth <= 0){
+            System.out.println("You ded");
+        }
+    }
+
+    public void healDamage(int damage){
+        curHealth += damage;
+        if (curHealth >= health){
+            curHealth = health;
+        }
+    }
+
+    public void useMP(){
+        curMP -= 1;
+    }
+
     public void displaySpells(){
         int count = 0;
         for(String spell:spells){
             count++;
-            System.out.print("count. "+spell+": ");
+            System.out.print(count+". "+spell+": ");
             if (spell.equals("In The Air Tonight")){
                 System.out.println("Basic Magic Attack");
             }else if (spell.equals("I Don't Care Anymore")){
@@ -119,8 +148,66 @@ public class collins {
                 System.out.println("Raises Attack");
             }else if (spell.equals("Two Hearts")){
                 System.out.println("Raise Magics");
+            }else if (spell.equals("Invisible Touch")){
+                System.out.println("Consitantaly does 100 damage");
+            }else if (spell.equals("That's All")){
+                System.out.println("The ultimate musical magic");
             }
 
         }
     }
+
+    public void upgradeWeapon(){
+        if(weapon.equals("Wooden Drumsticks")){
+            weapon = "Stone Drumsticks";
+        }else if (weapon.equals("Stone Drumsticks")){
+            weapon = "Steel Drumsticks";
+        }else if (weapon.equals("Steel Drumsticks")){
+            weapon = "Plastic Drumsticks";
+        }else if (weapon.equals("Plastic Drumsticks")){
+            weapon = "Blood Drumsticks";
+        }else if (weapon.equals("Blood Drumsticks")){
+            weapon = "Crystal Drumsticks";
+        }else if (weapon.equals("Crystal Drumsticks")){
+            weapon = "Phil's Signiture Drumsticks";
+        }else if (weapon.equals("Phil's Signiture Drumsticks")){
+            weapon = "Ringo's Signiture Drumsticks";
+        }else if (weapon.equals("Ringo's Signiture Drumsticks")){
+            weapon = "Microphone Drumsticks";
+        }else if (weapon.equals("Microphone Drumsticks")){
+            weapon = "Boohbah Drumsticks";
+        }else if (weapon.equals("Boohbah Drumsticks")){
+            System.out.println("You can't upgrade your weapon further");
+        }
+    }
+
+    public int dealDamage(){
+        double modifier = 1;
+        if(weapon.equals("Wooden Drumsticks")){
+            modifier = 1;
+        }else if (weapon.equals("Stone Drumsticks")){
+            modifier = 1.5;
+        }else if (weapon.equals("Steel Drumsticks")){
+            modifier = 2;
+        }else if (weapon.equals("Plastic Drumsticks")){
+            modifier = 2.25;
+        }else if (weapon.equals("Blood Drumsticks")){
+            modifier = 2.5;
+        }else if (weapon.equals("Crystal Drumsticks")){
+            modifier = 3;
+        }else if (weapon.equals("Phil's Signiture Drumsticks")){
+            modifier = 3.25;
+        }else if (weapon.equals("Ringo's Signiture Drumsticks")){
+            modifier = 3.5;
+        }else if (weapon.equals("Microphone Drumsticks")){
+            modifier = 3.75;
+        }else if (weapon.equals("Boohbah Drumsticks")){
+            modifier = 4;
+        }
+
+        int damage = (int) (attack * modifier)*10;
+        return damage;
+    }
+
+    
 }
