@@ -93,6 +93,12 @@ System.out.println("@@@@@@@@@@@@@@@@@%%#+=--=------:::::.....:::::::::::::::....
         }
     }
 
+    public static int random(int num1,int num2){ //Generates a random number between two values
+        int num3=(num2-num1)+1;
+        int ran_num = (int) (Math.random()*num3)+num1;
+        return ran_num;
+    }
+
     public static void clear(){
         System.out.print("\033{H}\033[2J");
         System.out.flush();
@@ -152,6 +158,7 @@ System.out.println("@@@@@@@@@@@@@@@@@%%#+=--=------:::::.....:::::::::::::::....
             System.out.println("Starting game...");
             waitTime(6);
             notStarted = false;
+            game();
         }else if (start == 2){
             tutorial();
         }else if (start == 3){
@@ -160,11 +167,107 @@ System.out.println("@@@@@@@@@@@@@@@@@%%#+=--=------:::::.....:::::::::::::::....
             System.out.println("Starting game...");
             waitTime(6);
             notStarted = false;
+            game();
         }
     }
+    }
+
+    public static void game(){
+        boolean alive = true;
+        collins phil = new collins();
+        while (alive){
+        enemy[] enemyList = {new enemy("quint"), new enemy("maxwell"), new enemy("troy"), new enemy("maddy")};
+        int randy = random(1,100);
+        enemy curEnemey;
+        if (randy > 50){
+            curEnemey = enemyList[0];
+        }else if (randy > 20){
+            curEnemey = enemyList[1];
+        }else if (randy > 5){
+            curEnemey = enemyList[2];
+        }else{
+            curEnemey = enemyList[3];
+        }
+        boolean playing = true;
+        System.out.println("encountered "+curEnemey.name);
+        System.out.println();
+        waitTime(2);
+        while (playing){
+        phil.displayHP();
+        int choice = intInput("what is your choice:\n1.attack\n2.magic\n3.self check\n4.check enemy\n: ");
+        waitTime(2);
+        int yourDamage;
+        int enemyDamage;
+        if (choice == 3){
+            phil.displayStats();
+        }else{
+            int yourSpeed = random(-5,5) + phil.speed;
+            int eneSpeed = random(-5,5) + curEnemey.speed;
+            if (yourSpeed > eneSpeed){
+                if(choice == 1){
+                    yourDamage = phil.dealDamage();
+                    waitTime(1);
+                    curEnemey.takeDamage(yourDamage);
+                    if (curEnemey.dead){
+                        waitTime(2);
+                        System.out.println("Defeated "+curEnemey.name);
+                        playing = false;
+                        break;
+                    }
+                }
+                else if (choice == 4){
+                    waitTime(2);
+                    System.out.println();
+                    curEnemey.displayStats();
+                }
+
+                enemyDamage = curEnemey.dealDamage();
+                waitTime(1);
+                phil.takeDamage(enemyDamage);
+                if (phil.dead){
+                    waitTime(3);
+                    System.out.println("I lost. Game Over.");
+                    playing = false;
+                    alive = false;
+                    break;
+                }
+            }else{
+                enemyDamage = curEnemey.dealDamage();
+                waitTime(1);
+                phil.takeDamage(enemyDamage);
+                if (phil.dead){
+                    waitTime(3);
+                    System.out.println("I lost. Game over.");
+                    playing = false;
+                    alive = false;
+                    break;
+                }
+                if(choice == 1){
+                    yourDamage = phil.dealDamage();
+                    waitTime(1);
+                    curEnemey.takeDamage(yourDamage);
+                    if (curEnemey.dead){
+                        waitTime(2);
+                        System.out.println("Defeated "+curEnemey.name);
+                        playing = false;
+                        alive = false;
+                        break;
+                    }
+                }
+                else if (choice == 4){
+                    waitTime(2);
+                    System.out.println();
+                    curEnemey.displayStats();
+                } 
+            }
+        }
+    }
+}
 
 
     }
+
+
 
     public static void main(String[] args){
         menu();

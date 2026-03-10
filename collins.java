@@ -7,10 +7,11 @@ public class collins {
     private ArrayList<String> spells;
     private int MP;
     private int curMP; 
-    private int speed; 
+    public int speed; 
     private double attack;
     private double defense;
     private double magic;
+    public boolean dead = false;
 
     public collins(){
         weapon = "Wooden Drumsticks";
@@ -39,6 +40,14 @@ public class collins {
     public void heal(){
         curHealth = health;
         curMP = MP;
+    }
+
+    public void healHP(){
+        curHealth = health;
+    }
+
+    public void healMP(){
+        curHealth = health;
     }
 
     public void gainMP(){
@@ -84,12 +93,12 @@ public class collins {
     }
 
     public void gainSpell(){
-        boolean continue = true;
+        boolean cont = true;
         boolean ableToContinue = true;
         int count = 0;
         String[] potentialSpells = {"In The Air Tonight","I Don't Care Anymore","Easy Lover","One More Night","Take Me Home","I Can't Dance","Sussudio","In Too Deep","Two Hearts"};
         int rando = (int)(Math.random()*8);
-        while (continue == true){
+        while (cont == true){
             String newSpell = potentialSpells[rando];
             for (String spell:spells){
                 if (newSpell.equals(spell)){
@@ -97,20 +106,21 @@ public class collins {
                 }
             }
             if (ableToContinue){
-                continue = false;
+                cont = false;
             }
             count++;
             if (count == 10){
-                continue = false;
+                cont = false;
             }
             
         }
     }
 
     public void takeDamage(int damage){
-        curHealth -= damage;
+        curHealth -= (int)(damage/defense);
+        System.out.println("You took: "+(int)(damage/defense)+" damage.");
         if (curHealth <= 0){
-            System.out.println("You ded");
+            dead = true;
         }
     }
 
@@ -125,33 +135,46 @@ public class collins {
         curMP -= 1;
     }
 
+    public void displayStats(){
+        System.out.println("HP: "+curHealth+"/"+health);
+        System.out.println("MP: "+curMP+"/"+MP);
+        System.out.println("Attack: " +attack);
+        System.out.println("Defense: "+defense);
+        System.out.println("Magic: "+magic);
+        System.out.println("Speed: "+speed);
+    }
+
+    public void displayHP(){
+        System.out.println("HP: "+curHealth+"/"+health);
+    }
+
     public void displaySpells(){
         int count = 0;
         for(String spell:spells){
             count++;
             System.out.print(count+". "+spell+": ");
             if (spell.equals("In The Air Tonight")){
-                System.out.println("Basic Magic Attack");
+                System.out.println("Basic Magic Attack Power");
             }else if (spell.equals("I Don't Care Anymore")){
-                System.out.println("Insta-Kill, fails against bosses");
+                System.out.println("Instant death, failure in boss battles");
             }else if (spell.equals("Easy Lover")){
-                System.out.println("Lowers enemies defense");
+                System.out.println("Lowers the enemy's defense");
             }else if (spell.equals("One More Night")){
-                System.out.println("Heals you");
+                System.out.println("heal you");
             }else if (spell.equals("Take Me Home")){
-                System.out.println("Resets Encounter");
+                System.out.println("Reset the encounter");
             }else if (spell.equals("I Can't Dance")){
-                System.out.println("Raises Speed");
+                System.out.println("increase speed");
             }else if (spell.equals("Sussudio")){
-                System.out.println("Raises Defense");
+                System.out.println("increase defense power");
             }else if (spell.equals("In Too Deep")){
-                System.out.println("Raises Attack");
+                System.out.println("increase attack power");
             }else if (spell.equals("Two Hearts")){
-                System.out.println("Raise Magics");
+                System.out.println("raise magic");
             }else if (spell.equals("Invisible Touch")){
-                System.out.println("Consitantaly does 100 damage");
+                System.out.println("Always deals 25 damage");
             }else if (spell.equals("That's All")){
-                System.out.println("The ultimate musical magic");
+                System.out.println("ultimate music magic");
             }
 
         }
@@ -204,8 +227,8 @@ public class collins {
         }else if (weapon.equals("Boohbah Drumsticks")){
             modifier = 4;
         }
-
-        int damage = (int) (attack * modifier)*10;
+        double range = Math.random()+0.8;
+        int damage = (int) ((attack * modifier)*10*range);
         return damage;
     }
 

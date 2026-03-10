@@ -1,12 +1,13 @@
 import java.util.ArrayList;
 
 public class enemy {
-    String name;
-    private int health;
-    private int curHealth;
+    public String name;
+    private static int health;
+    private static int curHealth;
     private ArrayList<String> spells;
-    private int speed; 
-    private double attack;
+    public int speed; 
+    public boolean dead = false;
+    private static double attack;
     private double defense;
     private double magic;
     private double magicChance;
@@ -206,8 +207,46 @@ public class enemy {
             magicChance = 40;
             specialMove = "Magic Beam";
         }else if (name.equals("evan")){
-            health = 40;
-            
+            health = 30;
+            attack = 10;
+            defense = 15;
+            magic = 22;
+            speed = 69;
+            magicChance = 70;
+            specialMove = "Geometry Dash";
+        }else if (name.equals("christopher")){
+            health = 50;
+            attack = 20;
+            defense = 20;
+            magic = 20;
+            magicChance = 69;
+            specialMove = "The Greatest Program";
+        }else{
+            health = 1;
+            attack = 1;
+            defense = 1;
+            magic = 1;
+            magicChance = 0;
+            specialMove = "???";
+        }
+        curHealth = health;
+    }
+
+    public int dealDamage(){
+        double range = Math.random()+0.8;
+        return (int) ((attack*2)*10*range);
+    }
+
+    public void displayStats(){
+        System.out.println(name);
+        System.out.println(curHealth+"/"+health);
+    }
+
+    public void takeDamage(int damage){
+        curHealth -= (int)(damage/defense);
+        System.out.println("Enemy took: "+(int)(damage/defense)+" damage.");
+        if (curHealth <= 0){
+            dead = true;
         }
     }
 
