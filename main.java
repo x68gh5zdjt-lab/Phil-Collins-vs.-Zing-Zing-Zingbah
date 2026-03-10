@@ -144,6 +144,9 @@ System.out.println("@@@@@@@@@@@@@@@@@%%#+=--=------:::::.....:::::::::::::::....
         phil();
         waitTime(3);
         while(notStarted){
+        System.out.println("PHIL COLLINS VS ZING ZING ZINGBAH");
+        waitTime(2);
+        System.out.println();
         int start  = intInput("Ready to get started?\n1. Start the game\n2. How to play\n3. Credits\n: ");
         if (start == 1){
             System.out.println("Starting game...");
