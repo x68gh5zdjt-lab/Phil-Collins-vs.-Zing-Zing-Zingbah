@@ -199,11 +199,23 @@ System.out.println("@@@@@@@@@@@@@@@@@%%#+=--=------:::::.....:::::::::::::::....
         waitTime(2);
         int yourDamage;
         int enemyDamage;
+        boolean useMagic = true;
+        int spell = 14;
+        if (choice == 2){
+            spell = phil.chooseSpells();
+            useMagic = false;
+            for (int i = 0; i < 11; i++){
+                if (spell == i){
+                    useMagic = true;
+                }
+            }
+        }
         if (choice == 3){
             System.out.println();
             phil.displayStats();
             System.out.println();
-        }else{
+        }
+        else if (useMagic){
             int yourSpeed = random(-5,5) + phil.speed;
             int eneSpeed = random(-5,5) + curEnemey.speed;
             int randMagic = random(1,100);
@@ -212,12 +224,47 @@ System.out.println("@@@@@@@@@@@@@@@@@%%#+=--=------:::::.....:::::::::::::::....
                     yourDamage = phil.dealDamage();
                     waitTime(1);
                     curEnemey.takeDamage(yourDamage);
-                    if (curEnemey.dead){
-                        waitTime(2);
-                        System.out.println("Defeated "+curEnemey.name);
-                        playing = false;
-                        break;
+                }else if(choice == 2){
+                    if (useMagic){
+                    if(spell == 1){
+                        yourDamage = phil.dealMagic();
+                        waitTime(1);
+                        curEnemey.takeMagic(yourDamage);
                     }
+                    else if (spell == 2){
+                        boolean kill = phil.instaKill();
+                        if (kill){
+                            curEnemey.takeDamage(10000000);
+                            waitTime(1);
+                            System.out.println("instant death");
+                        }else{
+                            waitTime(1);
+                            System.out.println("miss");
+                        }
+                    }else if (spell == 3){
+                        curEnemey.lowerDef();
+                    }else if (spell == 4){
+                        phil.healDamage();
+                    }else if (spell == 5){
+                    waitTime(2);
+                    System.out.println("Move Failed");
+                }else if (spell == 6){
+                    phil.raiseSpeed();
+                }else if (spell == 7){
+                    phil.raiseDefense();
+                }else if (spell == 8){
+                    phil.raiseAttack();
+                }else if (spell == 9){
+                    phil.raiseMagic();
+                }else if (spell == 0){
+                    curEnemey.takeConst();
+                }else if (spell == 10){
+                    yourDamage = phil.dealSuperDamage();
+                    waitTime(1);
+                        curEnemey.takeMagic(yourDamage);
+                }else{
+                    continue;
+                }}
                 }
                 else if (choice == 4){
                     waitTime(2);
@@ -225,6 +272,12 @@ System.out.println("@@@@@@@@@@@@@@@@@%%#+=--=------:::::.....:::::::::::::::....
                     curEnemey.displayStats();
                     System.out.println();
                 }
+                if (curEnemey.dead){
+                        waitTime(2);
+                        System.out.println("Defeated "+curEnemey.name);
+                        playing = false;
+                        break;
+                    }
                 waitTime(1);
 
                 if (randMagic > curEnemey.magicChance){
@@ -243,10 +296,8 @@ System.out.println("@@@@@@@@@@@@@@@@@%%#+=--=------:::::.....:::::::::::::::....
                     break;
                 }
             }else{
-                enemyDamage = curEnemey.dealDamage();
                 waitTime(1);
                 if (randMagic > curEnemey.magicChance){
-
                 enemyDamage = curEnemey.dealDamage();
                 phil.takeDamage(enemyDamage);
                 }else{
@@ -264,22 +315,65 @@ System.out.println("@@@@@@@@@@@@@@@@@%%#+=--=------:::::.....:::::::::::::::....
                     yourDamage = phil.dealDamage();
                     waitTime(1);
                     curEnemey.takeDamage(yourDamage);
-                    if (curEnemey.dead){
-                        waitTime(2);
-                        System.out.println("Defeated "+curEnemey.name);
-                        playing = false;
-                        break;
+                }
+                else if(choice == 2){ 
+                    if (useMagic){
+                    if (spell == 1){
+                        yourDamage = phil.dealMagic();
+                        waitTime(1);
+                        curEnemey.takeMagic(yourDamage);
                     }
+                    else if (spell == 2){
+                        boolean kill = phil.instaKill();
+                        if (kill){
+                            curEnemey.takeDamage(10000000);
+                            waitTime(1);
+                            System.out.println("instant death");
+                        }else{
+                            waitTime(1);
+                            System.out.println("miss");
+                        }
+                    }else if (spell == 3){
+                        curEnemey.lowerDef();
+                    }else if (spell == 4){
+                        phil.healDamage();
+                    }else if (spell == 5){
+                    waitTime(2);
+                    System.out.println("Move Failed");
+                }else if (spell == 6){
+                    phil.raiseSpeed();
+                }else if (spell == 7){
+                    phil.raiseDefense();
+                }else if (spell == 8){
+                    phil.raiseAttack();
+                }else if (spell == 9){
+                    phil.raiseMagic();
+                }else if (spell == 0){
+                    curEnemey.takeConst();
+                }else if (spell == 10){
+                    yourDamage = phil.dealSuperDamage();
+                    waitTime(1);
+                        curEnemey.takeMagic(yourDamage);
+                }else{
+                    continue;
+                }
                 }
                 else if (choice == 4){
                     waitTime(2);
                     System.out.println();
                     curEnemey.displayStats();
                     System.out.println();
-                } 
+                }
+                if (curEnemey.dead){
+                        waitTime(2);
+                        System.out.println("Defeated "+curEnemey.name);
+                        playing = false;
+                        break;
+                    }
             }
         }
     }
+}
     if (alive){
     int randyi = random(1,100);
     if (randyi > 85){
@@ -318,10 +412,11 @@ System.out.println("@@@@@@@@@@@@@@@@@%%#+=--=------:::::.....:::::::::::::::....
     }
 }
 
+    phil.resestTemps();
     System.out.println();
     waitTime(3);
     clear();
-}
+        }
 
 
     }

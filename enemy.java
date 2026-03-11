@@ -34,7 +34,7 @@ public class enemy {
         }else if (this.name.equals("maxwell")){
             health = 25;
             attack = 6;
-            defense = 2;
+            defense = 3;
             magic = 6;
             speed = 40;
             magicChance = 50;
@@ -161,7 +161,7 @@ public class enemy {
             specialMove = "Running Punch";
         }else if (name.equals("sam")){
             health = 35;
-            attack = 27;
+            attack = 23;
             defense = 10;
             magic = 1;
             speed = 60;
@@ -237,6 +237,11 @@ public class enemy {
         return (int) (attack*10*range);
     }
 
+    public void lowerDef(){
+        System.out.println("Lowered Defense");
+        defense /= (1+(magic/10));
+    }
+
     public void displayStats(){
         System.out.println(name);
         System.out.println(curHealth+"/"+health);
@@ -251,10 +256,15 @@ public class enemy {
         }
     }
 
+    public void takeConst(){
+        System.out.println("received damage");
+        curHealth -= 30;
+    }
+
     public int dealMagic(){
         double range = Math.random()+0.5;
         System.out.println("Enemy used: "+specialMove);
-        return (int) (magic*1.5*10*range);
+        return (int) (magic*10*range);
     }
 
     public void takeMagic(int damage){

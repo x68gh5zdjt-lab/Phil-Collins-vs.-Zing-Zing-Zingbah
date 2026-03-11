@@ -11,6 +11,10 @@ public class collins {
     private double attack;
     private double defense;
     private double magic;
+    public double tempAttack;
+    public double tempDefense;
+    public double tempSpeed;
+    public double tempMagic;
     public boolean dead = false;
 
     public collins(){
@@ -21,9 +25,14 @@ public class collins {
         MP = 5;
         curMP = 5;
         speed = 46;
+        tempSpeed = speed;
         attack = 5.36;
+        tempAttack = 5.36;
         defense = 5.54;
+        tempDefense = 5.34;
         magic = 4.23;
+        tempMagic = 4.23;
+        gainSpell();
 
     }
 
@@ -47,7 +56,7 @@ public class collins {
     }
 
     public void healMP(){
-        curHealth = health;
+        curMP = MP;
     }
 
     public void gainMP(){
@@ -62,34 +71,49 @@ public class collins {
 
     public void gainAttack(){
         attack += 0.1;
+        tempAttack += 0.1;
     }
 
     public void gainAttack(double attack){
         this.attack += attack;
+        this.tempAttack += attack;
     }
 
     public void gainDefense(){
         defense += 0.1;
+        tempDefense += 0.1;
     }
 
     public void gainDefense(double defense){
         this.defense += defense;
+        this.tempDefense += defense;
     }
 
     public void gainMagic(){
         magic += 0.1;
+        tempMagic += 0.1;
     }
 
     public void gainMagic(double magic){
         this.magic += magic;
+        this.tempMagic += magic;
     }
 
     public void gainSpeed(){
         speed += 1;
+        tempSpeed += 1;
     }
 
     public void gainSpeed(int speed){
         this.speed += speed;
+        tempSpeed += speed;
+    }
+
+    public void resestTemps(){
+        this.tempAttack = attack;
+        this.tempDefense = defense;
+        this.tempMagic = magic;
+        this.tempSpeed = speed;
     }
 
     public void gainSpell(){
@@ -107,26 +131,31 @@ public class collins {
             }
             if (ableToContinue){
                 cont = false;
+                spells.add(newSpell);
+                System.out.println("Learn "+newSpell);
             }
             count++;
-            if (count == 10){
+            if (count == 30){
                 cont = false;
             }
-            
         }
     }
 
     public void takeDamage(int damage){
-        curHealth -= (int)(damage/defense);
-        System.out.println("You took: "+(int)(damage/defense)+" damage.");
+        curHealth -= (int)(damage/tempDefense);
+        System.out.println("You took: "+(int)(damage/tempDefense)+" damage.");
         System.out.println();
         if (curHealth <= 0){
             dead = true;
         }
     }
 
-    public void healDamage(int damage){
-        curHealth += damage;
+    public void healDamage(){
+        double range = Math.random()+0.5;
+        System.out.println("You used One More Night: ");
+        int heal = (int) (tempMagic*4*range);
+        curHealth += heal;
+        System.out.println("Healed "+heal+" damage");
         if (curHealth >= health){
             curHealth = health;
         }
@@ -151,8 +180,8 @@ public class collins {
     }
 
     public void takeMagic(int damage){
-        curHealth -= (int)(damage/magic);
-        System.out.println("You took: "+(int)(damage/magic)+" damage.");
+        curHealth -= (int)(damage/tempMagic);
+        System.out.println("You took: "+(int)(damage/tempMagic)+" damage.");
         if (curHealth <= 0){
             dead = true;
         }
@@ -161,13 +190,14 @@ public class collins {
     public int dealMagic(){
         double range = Math.random()+0.5;
         System.out.println("You used In The Air Tonight: ");
-        return (int) (magic*1.5*range);
+        return (int) (tempMagic*10*4*range);
     }
 
     public void displaySpells(){
         int count = 0;
         for(String spell:spells){
             count++;
+            System.out.println("MP: "+curMP+"/"+MP);
             System.out.print(count+". "+spell+": ");
             if (spell.equals("In The Air Tonight")){
                 System.out.println("Basic Magic Attack Power");
@@ -194,13 +224,115 @@ public class collins {
             }
 
         }
+        System.out.println("Click enter to exit");
     }
     
     public int chooseSpells(){
         displaySpells();
-        int whichSpell = main.intInput("Which spell would like to use it? ");
-        if (spells[whichSpell] == )
+        int whichSpell = main.intInput("Which spell would like to use it? ")-1;
+        if (whichSpell >= spells.size() || curMP <= 0){
+            return 11;
+        }
+        else if (spells.get(whichSpell).equals("In The Air Tonight")){
+            curMP--;
+            return 1;
+        }else if (spells.get(whichSpell).equals("I Don't Care Anymore")){
+            curMP--;
+            return 2;
+        }else if (spells.get(whichSpell).equals("Easy Lover")){
+            curMP--;
+            return 3;
+        }else if (spells.get(whichSpell).equals("One More Night")){
+            curMP--;
+            return 4;
+        }else if (spells.get(whichSpell).equals("Take Me Home")){
+            curMP--;
+            return 5;
+        }else if (spells.get(whichSpell).equals("I Can't Dance")){
+            curMP--;
+            return 6;
+        }else if (spells.get(whichSpell).equals("Sussudio")){
+            curMP--;
+            return 7;
+        }else if (spells.get(whichSpell).equals("In Too Deep")){
+            curMP--;
+            return 8;
+        }else if (spells.get(whichSpell).equals("Two Hearts")){
+            curMP--;
+            return 9;
+        }else if (spells.get(whichSpell).equals("Invisible Touch")){
+            curMP--;
+            return 0;
+        }else if (spells.get(whichSpell).equals("That's All")){
+            curMP--;
+            return 10;
+        }else{
+            return 11;
+        }
     }
+
+    public boolean instaKill(){
+        int work = main.random(1,100);
+        if (work > 90){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public void raiseAttack(){
+        System.out.println("Increased attack power");
+        tempAttack *= (1 + (tempMagic/10));
+    }
+
+    public void raiseDefense(){
+        System.out.println("Increased defense power");
+        tempDefense *= (1 + (tempMagic/10));
+    }
+
+    public void raiseMagic(){
+        System.out.println("magic increased");
+        tempMagic *= (1 + (tempMagic/10));
+    }
+
+    public void raiseSpeed(){
+        System.out.println("speed increased");
+        tempSpeed *= (1 + (tempMagic/10));
+    }
+
+    public int dealSuperDamage(){
+        curMP -= 4;
+        System.out.println("You used That's All");
+        main.waitTime(3);
+        System.out.println("=");
+        main.waitTime(0.1);
+        System.out.println("=");
+        main.waitTime(0.1);
+        System.out.println("=");
+        main.waitTime(0.1);
+        System.out.println("=");
+        main.waitTime(0.1);
+        System.out.println("=");
+        main.waitTime(0.1);
+        System.out.println("=");
+        main.waitTime(0.1);
+        System.out.println("=");
+        main.waitTime(0.1);
+        System.out.println("=");
+        main.waitTime(0.1);
+        System.out.println("=");
+        main.waitTime(0.1);
+        System.out.println("=");
+        main.waitTime(2);
+        System.out.println("!");
+
+        double range = Math.random()+0.3;
+
+        return (int) (tempMagic*100*range);
+
+    }
+
+    
 
     public void upgradeWeapon(){
         if(weapon.equals("Wooden Drumsticks")){
@@ -251,7 +383,7 @@ public class collins {
             modifier = 4;
         }
         double range = Math.random()+0.5;
-        int damage = (int) ((attack * modifier)*10*range);
+        int damage = (int) ((tempAttack * modifier)*10*range);
         return damage;
     }
 
