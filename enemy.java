@@ -221,6 +221,52 @@ public class enemy {
             magic = 20;
             magicChance = 69;
             specialMove = "The Greatest Program";
+        }else if (name.equals("rudra")){
+            health = 30;
+            attack = 10;
+            defense = 10;
+            magic = 11;
+            magicChance = 69;
+            specialMove = "Love Attack";
+        }else if (name.equals("simone")){
+            health = 30;
+            attack = 10;
+            defense = 8;
+            magic = 13;
+            magicChance = 69;
+            specialMove = "Magic Beam";
+        }else if (name.equals("maxwell2")){
+            health = 45;
+            attack = 20;
+            defense = 20;
+            magic = 22;
+            speed = 40;
+            magicChance = 50;
+            specialMove = "Musical Mayhem";
+        }else if (name.equals("afton2")){
+            health = 80;
+            attack = 25;
+            defense = 20;
+            magic = 20;
+            speed = 25;
+            magicChance = 70;
+            specialMove = "Bassist Blast";
+        }else if (name.equals("gabe2")){
+            health = 50;
+            attack = 21;
+            defense = 20;
+            magic = 20;
+            speed = 1000;
+            magicChance = 50;
+            specialMove = "Running Punch";
+        }else if (name.equals("maddy2")){
+            health = 30;
+            attack = 1;
+            defense = 10;
+            magic = 60;
+            speed = 1000;
+            magicChance = 70;
+            specialMove = "The Disabler";
         }else{
             health = 1;
             attack = 1;
