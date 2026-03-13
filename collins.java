@@ -93,20 +93,14 @@ public class collins {
     }
 
     public void gainMP(){
-        MP += 1;
-        curMP += 1;
-        if (MP > 999){
-            MP -= 1;
-            curMP -=1;
+        MP += 1000;
+        curMP += 1000;
         }
     }
 
     public void gainMP(int MP){
         this.MP += MP;
         this.curMP += MP;
-        if (MP > 999){
-            this.MP -= MP;
-            this.curMP -=1;
         }
     }
 
