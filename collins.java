@@ -203,8 +203,8 @@ public class collins {
         boolean cont = true;
         boolean ableToContinue = true;
         int count = 0;
-        String[] potentialSpells = {"In The Air Tonight","I Don't Care Anymore","Easy Lover","One More Night","Take Me Home","I Can't Dance","Sussudio","In Too Deep","Two Hearts"};
-        int rando = (int)(Math.random()*8);
+        String[] potentialSpells = {"In The Air Tonight","I Don't Care Anymore","Easy Lover","One More Night","Take Me Home","I Can't Dance","Sussudio","In Too Deep","Two Hearts","Invisible Touch"};
+        int rando = (int)(Math.random()*10);
         while (cont == true){
             String newSpell = potentialSpells[rando];
             for (String spell:spells){
