@@ -7,13 +7,9 @@ Not Added Yet but intended features:
 
 Password System
 
-Intended function of take me home
-
-Learning that's all
-
 New Game +
 
-stat maximums
+Adding in a few more enemies
 
 
 I have not yet playtestsed the entire game and in it's present state it is very unbalanced and their could be multiple unknown bugs and broken features.
